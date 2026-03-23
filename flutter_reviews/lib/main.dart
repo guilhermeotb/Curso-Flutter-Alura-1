@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reviews/helpers/my_review.dart';
+import 'package:flutter_reviews/ui/review_screen.dart ';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const ReviewApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class ReviewApp extends StatelessWidget {
+  const ReviewApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      home: ReviewScreen(
+        review: getRandomReview(),
       ),
     );
   }

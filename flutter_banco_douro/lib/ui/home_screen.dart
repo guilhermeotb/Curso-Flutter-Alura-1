@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_banco_douro/models/account.dart';
 import 'package:flutter_banco_douro/services/account_service.dart';
@@ -36,6 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+        Icons.add,
+        color: Colors.black,
+        ),
+        ),
 
       body: Padding(
         padding: const EdgeInsets.all(16.0),

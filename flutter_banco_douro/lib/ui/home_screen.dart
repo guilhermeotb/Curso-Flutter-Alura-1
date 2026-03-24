@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add, color: Colors.black),
+        backgroundColor: AppColor.orangeApp,
       ),
 
       body: Padding(

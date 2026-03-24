@@ -15,7 +15,7 @@ Widget build(BuildContext context) {
   return MaterialApp(
     routes: {
       "login" : (context) => const LoginScreen(),
-      "home" : (context) => const HomeScreen(),
+      "home" : (context) => HomeScreen(),
     },
       initialRoute: "login",
     );

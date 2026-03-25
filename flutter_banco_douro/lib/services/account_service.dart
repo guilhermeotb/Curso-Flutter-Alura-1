@@ -11,11 +11,18 @@ class AccountService {
   String url = "https://api.github.com/gists/b5e5988083befbf76bfc7e34c6f518d1";
 
   Future<List<Account>> getAll() async {
-    Response response = await get(Uri.parse(url), headers: {"Authorization": "Bearer $githubApiKey"});
+    Response response = await get(
+      Uri.parse(url),
+      headers: {
+        "Authorization": "Bearer $githubApiKey",
+        "Accept": "application/json; charset=utf-8",
+      },
+    );
 
     _streamController.add("${DateTime.now()} | Requisição de leitura.");
 
-    Map<String, dynamic> mapResponse = json.decode(response.body);
+    final String responseUtf8 = utf8.decode(response.bodyBytes);
+    Map<String, dynamic> mapResponse = json.decode(responseUtf8);
     List<dynamic> listDynamic = json.decode(
       mapResponse["files"]["accounts.json"]["content"],
     );
@@ -45,14 +52,20 @@ class AccountService {
 
     Response response = await post(
       Uri.parse(url),
-      headers: {"Authorization": "Bearer $githubApiKey"},
-      body: json.encode({
-        "description": "account.json",
-        "public": true,
-        "files": {
-          "accounts.json": {"content": content},
-        },
-      }),
+      headers: {
+        "Authorization": "Bearer $githubApiKey",
+        "Content-Type": "application/json; charset=utf-8",
+        "Accept": "application/json; charset=utf-8",
+      },
+      body: utf8.encode(
+        json.encode({
+          "description": "account.json",
+          "public": true,
+          "files": {
+            "accounts.json": {"content": content},
+          },
+        }),
+      ),
     );
 
     if (response.statusCode.toString()[0] == "2") {
@@ -74,12 +87,18 @@ class AccountService {
 
     Response response = await patch(
       Uri.parse(url),
-      headers: {"Authorization": "Bearer $githubApiKey"},
-      body: json.encode({
-        "files": {
-          "accounts.json": {"content": content},
-        },
-      }),
+      headers: {
+        "Authorization": "Bearer $githubApiKey",
+        "Content-Type": "application/json; charset=utf-8",
+        "Accept": "application/json; charset=utf-8",
+      },
+      body: utf8.encode(
+        json.encode({
+          "files": {
+            "accounts.json": {"content": content},
+          },
+        }),
+      ),
     );
 
     if (response.statusCode.toString()[0] == "2") {

@@ -15,8 +15,10 @@ class AddAccountModal extends StatefulWidget {
 class _AddAccountModalState extends State<AddAccountModal> {
   String _accountType = "AMBROSIA";
 
-TextEditingController _nameController = TextEditingController();
-TextEditingController _lastNameController = TextEditingController();
+final TextEditingController _nameController = TextEditingController();
+final TextEditingController _lastNameController = TextEditingController();
+
+bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,7 @@ TextEditingController _lastNameController = TextEditingController();
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed:(isLoading)? null : () {
                        onButtonCancelClicked();
                     },
                     child: Text(
@@ -117,7 +119,8 @@ TextEditingController _lastNameController = TextEditingController();
                         AppColor.orangeApp,
                       ),
                     ),
-                    child: Text(
+                    child:(isLoading)? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(color: Colors.white),) 
+                    : const Text(
                       "Adicionar",
                       style: TextStyle(color: Colors.black),
                     ),
@@ -132,10 +135,17 @@ TextEditingController _lastNameController = TextEditingController();
   }
 
   onButtonCancelClicked(){
-    Navigator.pop(context);
+    if(!isLoading){
+        closeModal();
+    }
+   
   }
 
-  onButtonAddClicked(){
+  onButtonAddClicked () async {
+  if(!isLoading){
+       setState(() {
+      isLoading = true;
+    });
     String name = _nameController.text;
     String lastName = _lastNameController.text; 
     Account account = Account(
@@ -145,9 +155,17 @@ TextEditingController _lastNameController = TextEditingController();
       balance: 0,
       accountType: _accountType,
     );
-    AccountService().addAccount(account);
+    await AccountService().addAccount(account);
     _nameController.clear();
     _lastNameController.clear();  
+    closeModal();
+    setState(() {
+      isLoading = false;
+    });
+    }
+  }
+
+  closeModal(){
     Navigator.pop(context);
   }
 }

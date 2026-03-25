@@ -1,2 +1,2 @@
-# Curso - Do Dart ao Flutter: criando seu primeiro aplicativo
-Reposítorio de códigos e estudos do primeiro curso de Flutter da Alura, e continuação dos Cursos 4 e 5 de Dart.
+# Curso - Flutter: melhore a qualidade do app com design patterns
+Reposítorio de códigos e estudos do segundo curso de Flutter da Alura.
